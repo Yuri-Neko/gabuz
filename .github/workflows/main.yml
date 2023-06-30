@@ -26,3 +26,14 @@ jobs:
 
       - name: Update Readme
         run: node update-readme.js
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "Yuri-Neko"
+          git config --global user.email "mimin@api-kyouka.my.id"
+
+      - name: Commit and Push changes
+        run: |
+          git add README.md
+          git commit -m "Update Readme.md"
+          git push
