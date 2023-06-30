@@ -1,14 +1,6 @@
 {
-  "name": "auto-update-readme",
-  "version": "1.0.0",
-  "description": "Automatically updates the Readme.md file with the latest anime data from REST API.",
-  "scripts": {
-    "start": "node update-readme.js"
-  },
-  "author": "Your Name",
-  "license": "MIT",
   "dependencies": {
     "fs": "^0.0.1-security",
-    "node-fetch": "^3.1.0"
+    "node-fetch": "^3.3.1"
   }
 }
