@@ -1,39 +1,39 @@
-name: Update Readme
+name: "Daily check and update"
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Menjadwalkan pembaruan setiap hari pukul 00:00 UTC
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
 
 jobs:
-  update-readme:
+  check_and_update:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout master
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Set up python
+        uses: actions/setup-python@v4
         with:
-          node-version: '14'
+          python-version: 3.10.11
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Get latest anime data
+      - name: Install requirements
         run: |
-          curl -o data.json https://web.api-kyouka.my.id/api/anime/otakudesu/latest?apikey=${{ secrets.API_KEY }}
-
-      - name: Update Readme
-        run: node index.js
-
-      - name: Configure Git
+          pip install git+https://github.com/thesadru/genshin.py
+          pip install -r requirements.txt
+      - name: Run main.py
+        env:
+          COOKIES: ${{ secrets.COOKIES }}
         run: |
-          git config --global user.name "Yuri-Neko"
-          git config --global user.email "mimin@api-kyouka.my.id"
-
-      - name: Commit and Push changes
+          python main.py -o README.md
+      - name: Format with prettier
         run: |
-          git add README.md
-          git commit -m "Update Readme.md"
+          npx prettier README.md --write --parser html
+      - name: Commit and push if changed
+        run: |
+          git diff
+          git config user.name "Yuri-Neko"
+          git config user.email "mimin@api-kyouka.my.id"
+          git commit -asm "Kyouka Anime Game stats"
           git push
