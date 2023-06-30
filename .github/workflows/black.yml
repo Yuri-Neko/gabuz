@@ -37,8 +37,7 @@ jobs:
         run: |
           git add README.md
           git commit -m "Update Readme.md"
-          git remote set-url origin https://github.com/$GITHUB_REPOSITORY.git
-          git push origin HEAD:${{ github.ref }}
+          git push
 
 env:
   GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
